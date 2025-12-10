@@ -1,0 +1,78 @@
+{
+  "": {
+    "entityTypes": {
+      "User": {
+        "memberOfTypes": [
+          "BoxRole"
+        ]
+      },
+      "Box": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "owner": {
+              "type": "Entity",
+              "name": "User"
+            }
+          }
+        },
+        "memberOfTypes": [
+          "BoxGroup"
+        ]
+      },
+      "BoxRole": {
+        "shape": {
+          "type": "Record",
+          "attributes": {}
+        }
+      },
+      "BoxGroup": {
+        "shape": {
+          "type": "Record",
+          "attributes": {}
+        },
+        "memberOfTypes": [
+          "BoxCollection"
+        ]
+      },
+      "BoxCollection": {
+        "shape": {
+          "type": "Record",
+          "attributes": {}
+        }
+      }
+    },
+    "actions": {
+      "read": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Box"
+          ],
+          "principalTypes": [
+            "User"
+          ]
+        }
+      },
+      "update": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Box"
+          ],
+          "principalTypes": [
+            "User"
+          ]
+        }
+      },
+      "delete": {
+        "appliesTo": {
+          "resourceTypes": [
+            "Box"
+          ],
+          "principalTypes": [
+            "User"
+          ]
+        }
+      }
+    }
+  }
+}

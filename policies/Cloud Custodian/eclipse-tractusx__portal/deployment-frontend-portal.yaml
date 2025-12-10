@@ -1,0 +1,147 @@
+###############################################################
+# Copyright (c) 2022 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+###############################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "portal.fullname" . }}-{{ .Values.frontend.portal.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "portal.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    {{- toYaml .Values.updateStrategy | nindent 4 }}
+  selector:
+    matchLabels:
+      app: {{ include "portal.fullname" . }}-{{ .Values.frontend.portal.name }}
+      {{- include "portal.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "portal.fullname" . }}-{{ .Values.frontend.portal.name }}
+        {{- include "portal.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.frontend.portal.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ include "portal.fullname" . }}-{{ .Values.frontend.portal.name }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        image: {{ .Values.frontend.portal.image.name }}:{{ .Values.frontend.portal.image.portaltag | default .Chart.AppVersion }}
+        imagePullPolicy: "{{ .Values.frontend.portal.image.pullPolicy }}"
+        env:
+          - name: REQUIRE_HTTPS_URL_PATTERN
+            value: "{{ .Values.frontend.portal.requireHttpsUrlPattern }}"
+          - name: CLEARINGHOUSE_CONNECT_DISABLED
+            value: "{{ .Values.clearinghouseConnectDisabled }}"
+          - name: PORTAL_ASSETS_URL
+            value: "{{ .Values.portalAddress }}{{ .Values.frontend.assets.path }}"
+          - name: PORTAL_BACKEND_URL
+            value: "{{ .Values.portalBackendAddress }}"
+          - name: CENTRALIDP_URL
+            value: "{{ .Values.centralidp.address }}{{ .Values.frontend.centralidpAuthPath }}"
+          - name: SSI_CREDENTIAL_URL
+            value: "{{ .Values.issuerComponentAddress }}"
+          - name: BPDM_POOL_API_URL
+            value: "{{ .Values.bpdm.poolAddress }}{{ .Values.bpdm.poolApiPath }}"
+          - name: BPDM_GATE_API_URL
+            value: "{{ .Values.bpdm.portalGateAddress }}{{ .Values.bpdm.portalGateApiPath }}"
+          - name: SEMANTICS_URL
+            value: "{{ .Values.semanticsAddress }}"
+          - name: MANAGED_IDENTITY_WALLETS_NEW_URL
+            value: "{{ .Values.custodianAddress }}"
+          - name: BPNDIDRESOLVER_DIRECTORY_URL
+            value: "{{ .Values.bpnDidResolver.directoryApiAddress }}"
+          - name: REALM
+            value: "{{ .Values.centralidp.realm }}"
+          - name: CLIENT_ID
+            value: "{{ .Values.centralidp.clients.portal }}"
+          - name: CLIENT_ID_REGISTRATION
+            value: "{{ .Values.centralidp.clients.registration }}"
+          - name: CLIENT_ID_SEMANTIC
+            value: "{{ .Values.centralidp.clients.semantic }}"
+          - name: CLIENT_ID_MIW
+            value: "{{ .Values.centralidp.clients.miw }}"
+          - name: CLIENT_ID_BPDM
+            value: "{{ .Values.centralidp.clients.bpdm }}"
+          - name: CLIENT_ID_SSI_CREDENTIAL
+            value: "{{ .Values.centralidp.clients.issuerComponent }}"
+        ports:
+        - name: http
+          containerPort: {{ .Values.portContainer }}
+          protocol: TCP
+        startupProbe:
+          httpGet:
+            path: "/"
+            port: {{ .Values.portContainer }}
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.startupProbe.successThreshold }}
+          failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: {{ .Values.portContainer }}
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+        # @url: https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-setting-up-health-checks-with-readiness-and-liveness-probes
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: {{ .Values.portContainer }}
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        resources:
+          {{- toYaml .Values.frontend.portal.resources | nindent 10 }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      volumes:
+      - emptyDir: {}
+        name: tmp
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

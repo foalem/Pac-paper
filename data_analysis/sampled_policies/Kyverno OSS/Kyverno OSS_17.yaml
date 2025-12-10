@@ -1,0 +1,188 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "This template create the EKS Cluster resources for the Microservice Observability with Amazon OpenSearch Service Workshop."
+
+Parameters:
+  EKSClusterName:
+    Type: String
+  VPC:
+    Type: String
+  PublicSubnet1:
+    Type: String
+  PublicSubnet2:
+    Type: String
+  PublicSubnet3:
+    Type: String
+  PrivateSubnet1:
+    Type: String
+  PrivateSubnet2:
+    Type: String
+  PrivateSubnet3:
+    Type: String
+  PipelineName:
+    Type: String
+  EKSIAMRole:
+    Type: String
+
+Resources:
+  ClusterControlPlaneSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Cluster communication with worker nodes
+      VpcId: !Ref VPC
+
+  EKSPodOTELPodRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - pods.eks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+              - sts:TagSession
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy    
+      Policies:
+        - PolicyName: osis
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - ec2:DescribeInstances
+                Resource: "*"
+              - Effect: Allow
+                Action: 
+                  - sts:TagSession
+                Resource: "*"
+              - Effect: Allow
+                Action: 
+                  - es:DescribeDomain
+                Resource: "*"
+              - Effect: Allow
+                Action: 
+                  - es:ESHttp*
+                Resource: "*"
+              - Effect: Allow
+                Action: 
+                  - osis:*
+                Resource: "*"
+
+  OSIPipelineRole:
+    Type: "AWS::IAM::Role"
+    DependsOn: EKSPodOTELPodRole
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - pods.eks.amazonaws.com
+              AWS: 
+                - !GetAtt EKSPodOTELPodRole.Arn
+            Action:
+              - sts:AssumeRole
+              - sts:TagSession  
+      Policies:
+        - PolicyName: osis
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - es:DescribeDomain
+                Resource: "*"
+              - Effect: Allow
+                Action: 
+                  - es:ESHttp*
+                Resource: "*"
+              - Effect: Allow
+                Action: 
+                  - osis:*
+                Resource: "*"
+
+  EKSNodesIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+                - ec2.amazonaws.com
+                - osis.amazonaws.com
+                - osis-pipelines.amazonaws.com
+                - opensearchservice.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy        
+      Policies:
+        - PolicyName: osis
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "osis:Ingest"
+                Resource: !Sub "arn:aws:osis:${AWS::Region}:${AWS::AccountId}:pipeline/${PipelineName}*"
+                  
+  EKS:
+    Type: "AWS::EKS::Cluster"
+    Properties:
+      Name: !Ref EKSClusterName
+      Version: "1.31"
+      RoleArn: !Ref EKSIAMRole
+      AccessConfig:
+        AuthenticationMode: API_AND_CONFIG_MAP
+      ResourcesVpcConfig:
+        SubnetIds:
+          - !Ref PublicSubnet1
+          - !Ref PublicSubnet2
+          - !Ref PublicSubnet3
+
+  EKSNodegroup:
+    Type: "AWS::EKS::Nodegroup"
+    DependsOn: EKS
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      NodeRole: !GetAtt EKSNodesIAMRole.Arn
+      CapacityType: ON_DEMAND
+      ScalingConfig:
+        MinSize: 1
+        DesiredSize: 3
+        MaxSize: 5
+      Subnets:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+        - !Ref PrivateSubnet3
+
+  OTELCollectorIdentityAssociation:
+    DependsOn: 
+      - EKS
+      - EKSPodOTELPodRole
+    Type: AWS::EKS::PodIdentityAssociation
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      Namespace: otel-collector
+      RoleArn: !GetAtt EKSPodOTELPodRole.Arn
+      ServiceAccount: default
+
+  PodIdentityAgentAddOn:
+    DependsOn: 
+      - EKS
+    Type: "AWS::EKS::Addon"
+    Properties:
+      AddonName: "eks-pod-identity-agent"
+      ClusterName: !Ref EKSClusterName

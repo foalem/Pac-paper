@@ -1,0 +1,222 @@
+===========================================================
+Scientific Observatory Network (SciON)
+===========================================================
+
+(C) Individual Contributors, 2014-2015
+Open source under BSD license. See LICENSE for details.
+
+===========================================================
+Code is in parts based on the:
+
+Ocean Observatories Initiative Cyberinfrastructure (OOI CI)
+Integrated Observatory Network (ION)
+
+(C) The Regents of the University of California, 2010-2014
+Open source under BSD license.
+
+(C) University of Chicago, 2013
+Open source under Apache 2.0 license (execution env.)
+===========================================================
+
+
+See also: ScionCC Wiki, https://github.com/scionrep/scioncc/wiki
+
+
+DESCRIPTION
+===========
+
+SciON provides an extensible Python application server, core frameworks and
+services for a variety of applications, including scientific observation,
+data streaming and signal processing.
+
+SciON provides a message-driven, service-oriented scalable application
+deployment platform with REST API gateway that can be extended to meet
+custom needs.
+
+Based on the Ocean Observatories Initiative Cyberinfrastructure, see
+https://github.com/ooici/pyon and https://github.com/ooici/coi-services
+
+
+PROJECT STRUCTURE
+=================
+
+bin/            (generated) buildout scripts to start container etc
+defs/objects/   interface definitions for objects and service
+defs/res/       deployment and configuration files
+interface/      (generated) service clients, stubs and object base classes
+logs/           (generated) contains log files produced by the container
+misc/           make and install libraries and documentation
+obj/            (symlink) to defs/objects
+res/            (symlink) to defs/res
+src/            project source code and packages root (also contains setup.py)
+src/pyon/       code for the Pyon framework (config, messaging, logging, objects)
+                and the ScionCC container and related utils
+src/ion/        code for higher level services, processes, UIs and agents
+src/putil/      code for Pyon independent utils (not gevent aware)
+src/scripts/    code for script entry points
+
+
+INSTALL
+=======
+
+See file INSTALL for details.
+
+
+CONFIGURE
+=========
+
+Provide local configuration (e.g. host names, passwords) in:
+    ./res/config/pyon.local.yml
+    Note: additional override config can be provided via the bin/pycc command line
+
+Note: You can copy from res/config/examples. DO NOT EDIT the provided config files.
+
+Provide logging override configuration for loggers by module in:
+    ./res/config/logging.local.yml
+    Note: additional override logging config can be provided via the command line
+
+
+USAGE
+=====
+
+Start a development instance of the SciON system with basic services:
+    > bin/pycc -fc -r res/deploy/basic.yml      # Note: -fc cleans database
+
+List supported Pyon Capability Container arguments:
+    > bin/pycc --help
+
+Run unit tests:
+    > bin/nosetests -v -a UNIT
+
+Run smoke tests to verify sanity of the system:
+    > bin/nosetests -v -a SMOKE
+
+Run full integration tests - this will take a long time so may be optional:
+    > bin/nosetests -v -a INT
+
+To launch the developer/admin Web UI (default on localhost:8080), add --mx option:
+    > bin/pycc --mx
+
+To set a different sysname:
+    > bin/pycc -s NEWSYSNAME
+
+
+INTERACTIVE SHELL
+=================
+
+After startup with bin/pycc, the capability container drops into an interactive
+IPython shell. Introspect running services or perform any Python programming step.
+Exit with Ctrl-D or quit()
+
+
+MANHOLE
+=======
+
+After startup with bin/pycc -n, the capability container maintains an embedded
+IPython kernel. Connect with bin/manhole and use similar to IPython shell.
+Detach from shell with Ctrl-D or stop the container with quit().
+    > bin/manhole
+
+
+DEVELOPMENT
+===========
+
+To reset the system's messaging and datastore persistence, call:
+    > bin/pycc -X -fc -bc
+
+Clean outdated code (*.pyc files and generated interfaces):
+    > ant clean
+    > bin/generate_interface
+
+To drop Postgres databases:
+    > bin/clear_db SYSNAME    # E.g. ion, scion or other sysname
+
+Development environment:
+    A good IDE is PyCharm (free community edition works). Just configure:
+    = Buildout Support: Enable buildout support by pointing at bin/pycc
+    - Project Structure: source root is ./src
+    - Project Structure: add content root extern/scioncc/src
+    - Python Interpreter: use the python binary from your virtualenv directory
+    - Python Debugger: Enable Gevent compatibility mode
+
+RabbitMQ management interface (login as guest/guest):
+    http://localhost:15672
+
+Database inspection using psql tool (example):
+    psql postgres
+    \l
+    \c scion_ion
+    \dt+
+    \d ion_resources
+    select id,type_,name from ion_resources;
+    \q
+
+Using IPython with buildout:
+    > bin/ipython
+
+To get a trace of concurrent greenlets in the container (replace pid with container's pid):
+    > kill -SIGUSR2 pid
+
+
+TEST
+====
+
+To run automated tests:
+    > bin/nosetests
+
+Test options (selection, can be combined):
+    > bin/nosetests -v      # List test names and status while running
+    > bin/nosetests -s      # Show console output while running
+
+You can run subsets of tests:
+    > bin/nosetests -a UNIT   # Unit tests only (mocked out backend dependencies)
+    > bin/nosetests -a INT    # Integration tests only (loads full service stack)
+    > bin/nosetests -a SMOKE  # Small cross-section of tests to quickly check function
+
+    > bin/nosetests scioncc.path.to.package  # Run a subset by code package
+    > bin/nosetests scioncc.path.to.package.module:TestClass.test_method  # Run a specific test
+
+Code coverage.
+    See http://nedbatchelder.com/code/coverage for details, options etc.
+    > bin/coverage bin/nosetests   # Can run with any test
+    > bin/coverage report
+    > bin/coverage html
+
+
+PACKAGING AND DEPLOYMENT
+========================
+
+To create a distribution egg in ./dist:
+    > ant clean
+    > bin/generate_interfaces
+    > bin/buildout setup . bdist_egg
+
+To configure a ScionCC application as an Upstart daemon, read ./misc/deploy/deploy_ubuntu.txt
+    > sudo service scion start
+
+
+TROUBLESHOOTING
+===============
+
+See DEVELOPMENT section for how to clean the database, broker and outdated code.
+
+If your code/tests fail, you might have some incorrect values in
+pyon.local.yml or logging.local.yml. Also try restarting RabbitMQ.
+
+If your code/tests fail unexpectedly when you have tried everything else, your build
+environment might be corrupted.
+    - check for bogus packages in virtualenv lssitepackages -al
+    - rm and recreate the virtualenv
+    - re-run bootstrap.py and buildout
+    - If you suspect an egg is bad, remove the suspected egg from the eggs/ dir. Re-run buildout.
+
+
+DEBUG
+=====
+
+Use Pycharm or any other Python IDE to debug; breakpoints and step-by-step
+are possible. Set the executable to bin/pycc (or bin/nosetests) and set the
+working directory to the git repository root. Use the -n option to avoid the
+interactive IPython shell--it does not work properly with the debugger.
+
+See DEVELOPMENT section for how to configure PyCharm IDE.

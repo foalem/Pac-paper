@@ -1,0 +1,73 @@
+name: Cloud Native Computing Foundation (CNCF)
+type: Foundation
+data:
+  platforms:
+    - name: GitHub
+      type: Code Hosting
+      orgs:
+        - id: 13455738
+          name: cncf
+  labels:
+    - ':companies/alibaba/dragonfly'
+    - ':companies/pingcap/tikv'
+    - argo
+    - backstage
+    - buildpacks
+    - cert_manager
+    - chaos_mesh
+    - cilium
+    - cloud_custodian
+    - cloudevents
+    - container_network_interface
+    - containerd
+    - contour
+    - coredns
+    - cortex
+    - cri_o
+    - crossplane
+    - cubefs
+    - dapr
+    - emissary_ingress
+    - envoy
+    - etcd
+    - falco
+    - fluentd
+    - flux
+    - grpc
+    - harbor
+    - helm
+    - in_toto
+    - istio
+    - jaeger
+    - karmada
+    - keda
+    - keptn
+    - keycloak
+    - knative
+    - kubeedge
+    - kubeflow
+    - kubernetes
+    - kubernetes
+    - kubevela
+    - kubevirt
+    - kyverno
+    - linkerd
+    - litmus
+    - longhorn
+    - nats
+    - notary
+    - open_policy_agent
+    - openfeature
+    - openkruise
+    - openmetrics
+    - opentelemetry
+    - operator_framework
+    - prometheus
+    - rook
+    - spiffe
+    - spire
+    - strimzi
+    - thanos
+    - the_update_framework
+    - vitess
+    - volcano

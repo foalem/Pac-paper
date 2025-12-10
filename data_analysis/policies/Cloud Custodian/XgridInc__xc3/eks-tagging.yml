@@ -1,0 +1,38 @@
+# Copyright (c) 2023, Xgrid Inc, https://xgrid.co
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#        http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+policies:
+- name: eks-auto-tag-user
+  resource: eks
+  mode:
+    type: cloudtrail
+    role: arn:aws:iam::{account_id}:role/onboarding-custodian-role
+    events:
+      - source: "eks.amazonaws.com"
+        event: "CreateCluster"
+        ids: "requestParameters.name"
+  filters:
+    - or:
+        - "tag:Creator": absent
+        - "tag:Owner": absent
+        - "tag:Project": absent
+  actions:
+    - type: notify
+      template: tagging-msg-template.html
+      subject: "[XC3] EKS Cluster is non-conformant to tagging Policies"
+      to:
+      - event-owner
+      transport:
+        type: sqs
+        queue: https://sqs.eu-west-1.amazonaws.com/{account_id}/xc3-notification-queue

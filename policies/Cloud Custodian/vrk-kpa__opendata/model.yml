@@ -1,0 +1,499 @@
+vocabularies:
+  - prefix: adms
+    uri: "http://www.w3.org/ns/adms#"
+  - prefix: dcat
+    uri: "http://www.w3.org/ns/dcat#"
+  - prefix: dcatap
+    uri: "http://data.europa.eu/r5r/"
+  - prefix: dct
+    uri: "http://purl.org/dc/terms/"
+  - prefix: foaf
+    uri: "http://xmlns.com/foaf/0.1/"
+  - prefix: locn
+    uri: "http://www.w3.org/ns/locn#"
+  - prefix: owl
+    uri: "http://www.w3.org/2002/07/owl#"
+  - prefix: odrl
+    uri: "http://www.w3.org/ns/odrl/2/"
+  - prefix: rdfs
+    uri: "http://www.w3.org/2000/01/rdf-schema#"
+  - prefix: schema
+    uri: "http://schema.org/"
+  - prefix: skos
+    uri: "http://www.w3.org/2004/02/skos/core#"
+  - prefix: spdx
+    uri: "http://spdx.org/rdf/terms#"
+  - prefix: xsd
+    uri: "http://www.w3.org/2001/XMLSchema#"
+  - prefix: vann
+    uri: "http://purl.org/vocab/vann/"
+  - prefix: voaf
+    uri: "http://purl.org/vocommons/voaf#"
+  - prefix: vcard
+    uri: "http://www.w3.org/2006/vcard/ns#"
+  - prefix: geodcat
+    uri: "http://data.europa.eu/930/#"
+  - prefix: gsp
+    uri: "http://www.opengis.net/ont/geosparql#"
+classes:
+  - title: Catalogue
+    description: A catalogue or repository that hosts the Datasets being described.
+    term: Catalog
+    properties:
+      mandatory:
+        - name: dataset
+          term: dcat:dataset
+          range: dcat:Dataset
+          description: This property links the Catalogue with a Dataset that is part of the Catalogue.
+          min: 1
+          max: n
+        - name: description
+          term: dct:description
+          range: rdfs:Literal
+          description: This property contains a free-text account of the Catalogue. This property can be repeated for parallel language versions of the description. For further information on multilingual issues, please refer to section 8.
+          min: 1
+          max: n
+        - name: publisher
+          term: dct:publisher
+          range: foaf:Agent
+          description: This property refers to an entity (organisation) responsible for making the Catalogue available. 
+          min: 1
+          max: 1
+        - name: Title
+          term: dct:title
+          range: rdfs:Literal
+          description: This property contains a name given to the Catalogue. This property can be repeated for parallel language versions of the name.
+          min: 1
+          max: n
+
+      recommended:
+        - name: homepage
+          term: foaf:homepage
+          range: foaf:Document
+          description: This property refers to a web page that acts as the main page for the Catalogue.
+          min: 0
+          max: 1
+        - name: language
+          term: dct:language
+          range: dct:LinguisticSystem
+          description: This property refers to a language used in the textual metadata describing titles, descriptions, etc. of the Datasets in the Catalogue. This property can be repeated if the metadata is provided in multiple languages.
+          min: 0
+          max: n
+        - name: release date                                                                                                                                                                                                                     │
+          term: dct:issued                                                                                                                                                                                                                       │
+          range: rdfs:Literal typed as xsd:date or xsd:dateTime                                                                                                                                                                                  │
+          description: This property contains the date of formal issuance (e.g., publication) of the Catalogue.                                                                                                                                  │
+          min: 0                                                                                                                                                                                                                                 │
+          max: 1
+        - name: spatial/ geographic
+          term: dct:spatial
+          range: dct:Location
+          description: This property refers to a geographical area covered by the Catalogue. 
+          min: 0
+          max: n
+        - name: update/ modification date
+          term: dct:modified
+          range: rdfs:Literal typed as xsd:date or xsd:dateTime
+          description: This property contains the most recent date on which the Catalogue was modified.
+          min: 0
+          max: 1
+      optional:
+        - name: Rights
+          term: dct:rights
+          range: dct:RightsStatement
+          description: This property refers to a statement that specifies rights associated with the Catalogue.
+          min: 0
+          max: 1
+        - name: service 
+          term: dcat:dataservice
+          range: dcat:DataService
+          description: This property refers to a site or end-point that is listed in the catalog.
+          min: 0
+          max: n
+
+  - title: Dataset
+    description: A conceptual entity that represents the information published. 
+    term: Dataset
+    properties:
+      mandatory:
+        - name: description
+          term: dct:description
+          range: rdfs:Literal
+          description: This property contains a free-text account of the Dataset. This property can be repeated for parallel language versions of the description.
+          min: 1
+          max: n
+        - name: title
+          term: dct:title
+          range: rdfs:Literal
+          description: This property contains a name given to the Dataset. This property can be repeated for parallel language versions of the name.
+          min: 1
+          max: n
+        - name: collection type
+          term: adfi:collectionType
+          range: rdfs:Literal
+          description: This property defines if the Dataset describes open data or interoperability tools
+          min: 1
+          max: 1
+
+      recommended:
+        - name: contact point
+          term: dcat:contactPoint
+          range: vcard:Kind
+          description: This property contains contact information that can be used for sending comments about the Dataset.
+          min: 0
+          max: n
+        - name: dataset distribution
+          term: dcat:distribution
+          range: dcat:Distribution
+          description: This property links the Dataset to an available Distribution.
+          min: 0
+          max: n
+        - name: keyword/ tag
+          term: dcat:keyword
+          range: rdfs:Literal
+          description: This property contains a keyword or tag describing the Dataset.
+          min: 0
+          max: n
+        - name: publisher
+          term: dct:publisher
+          range: foaf:Agent
+          description: This property refers to an entity (organisation) responsible for making the Dataset available.
+          min: 0
+          max: 1
+        - name: spatial/ geographical coverage
+          term: dct:spatial
+          range: dct:Location
+          description: This property refers to a geographic region that is covered by the Dataset. 
+          min: 0
+          max: n
+        - name: temporal coverage
+          term: dct:temporal
+          range: dct:PeriodOfTime
+          description: This property refers to a temporal period that the Dataset covers.
+          min: 0
+          max: 1
+        - name: theme/ category
+          term: dcat:theme, subproperty of dct:subject
+          range: skos:Concept
+          description: This property refers to a category of the Dataset. A Dataset may be associated with multiple themes.
+          min: 0
+          max: n
+
+      optional:
+        - name: access rights
+          term: dct:accessRights
+          range: dct:RightsStatement
+          description: This property refers to information that indicates whether the Dataset is open data, has access restrictions or is not public. A controlled vocabulary with three members (:public, :restricted, :non-public) will be created and maintained by the Publications Office of the EU. 
+          min: 0
+          max: 1
+        - name: creator
+          term: dct:creator
+          range: foaf:Agent
+          description: This property refers to the  entity primarily responsible for producing the dataset
+          min: 0
+          max: 1
+        - name: frequency
+          term: dct:accrualPeriodicity
+          range: dct:Frequency
+          description: This property refers to the frequency at which the Dataset is updated.
+          min: 0
+          max: 1
+        - name: identifier
+          term: dct:identifier
+          range: rdfs:Literal
+          description: This property contains the main identifier for the Dataset, e.g. the URI or other unique identifier in the context of the Catalogue.
+          min: 0
+          max: n
+        - name: landing page
+          term: dcat:landingPage
+          range: foaf:Document
+          description: This property refers to a web page that provides access to the Dataset, its Distributions and/or additional information. It is intended to point to a landing page at the original data provider, not to a page on a site of a third party, such as an aggregator.
+          min: 0
+          max: n
+        - name: release date
+          term: dct:issued
+          range: rdfs:Literal typed as xsd:date or xsd:dateTime
+          description: This property contains the date of formal issuance (e.g., publication) of the Dataset.
+          min: 0
+          max: 1
+        - name: spatial resolution
+          term: dcat:spatialResolutionInMeters
+          range: xsd:decimal
+          description: This property refers to the minimum spatial separation resolvable in a dataset, measured in meters.
+          min: 0
+          max: n
+        - name: temporal resolution
+          term: dcat:temporalResolution
+          range: xsd:duration
+          description: This property refers to the minimum time period resolvable in the dataset.
+          min: 0
+          max: n
+        - name: type
+          term: dct:type
+          range: skos:Concept
+          description: This property refers to the type of the Dataset. A controlled vocabulary for the values has not been established.
+          min: 0
+          max: 1
+        - name: update/ modification date
+          term: dct:modified
+          range: rdfs:Literal typed as xsd:date or xsd:dateTime
+          description: This property contains the most recent date on which the Dataset was changed or modified.
+          min: 0
+          max: 1
+        - name: custodian
+          term: geodcat:custodian
+          range: foaf:Agent
+          description: Party that accepts accountability and responsibility for the data and ensures appropriate care and maintenance of the resource [ISO-19115].
+          min: 0
+          max: n
+
+
+  - title: Distribution
+    description: A physical embodiment of the Dataset in a particular format.
+    term: Distribution
+    properties:
+      mandatory:
+        - name: access URL
+          term: dcat:accessURL
+          range: rdfs:Resource
+          description: This property contains a URL that gives access to a Distribution of the Dataset. The resource at the access URL may contain information about how to get the Dataset. 
+          min: 1
+          max: n
+
+      recommended:
+        - name: description
+          term: dct:description
+          range: rdfs:Literal
+          description: This property contains a free-text account of the Distribution. This property can be repeated for parallel language versions of the description.
+          min: 0
+          max: n
+        - name: format
+          term: dct:format
+          range: dct:MediaTypeOrExtent
+          description: This property refers to the file format of the Distribution.
+          min: 0
+          max: 1
+        - name: licence
+          term: dct:license
+          range: dct:LicenseDocument
+          description: This property refers to the licence under which the Distribution is made available.
+          min: 0
+          max: 1
+
+      optional:
+        - name: byte size
+          term: dcat:byteSize
+          range: rdfs:Literal typed as xsd:decimal
+          description: This property contains the size of a Distribution in bytes.
+          min: 0
+          max: 1
+        - name: Checksum
+          term: spdx:checksum
+          range: spdx:Checksum
+          description: This property provides a mechanism that can be used to verify that the contents of a distribution have not changed. The checksum is related to the downloadURL.
+          min: 0
+          max: 1
+        - name: download URL
+          term: dcat:downloadURL
+          range: rdfs:Resource
+          description: This property contains a URL that is a direct link to a downloadable file in a given format. 
+          min: 0
+          max: n
+        - name: media type
+          term: dcat:mediaType, subproperty of dct:format
+          range: dct:MediaType
+          description: This property refers to the media type of the Distribution as defined in the official register of media types managed by IANA.
+          min: 0
+          max: 1
+        - name: release date
+          term: dct:issued
+          range: rdfs:Literal typed as xsd:date or xsd:dateTime
+          description: This property contains the date of formal issuance (e.g., publication) of the Distribution.
+          min: 0
+          max: 1
+        - name: rights
+          term: dct:rights
+          range: dct:RightsStatement
+          description: This property refers to a statement that specifies rights associated with the Distribution.
+          min: 0
+          max: 1
+        - name: spatial resolution 
+          term: dcat:spatialResolutionInMeters
+          range: xsd:decimal
+          description: This property refers to the  minimum spatial separation resolvable in a dataset distribution, measured in meters.
+          min: 0
+          max: n
+        - name: status
+          term: adms:status
+          range: skos:Concept
+          description: This property refers to the maturity of the Distribution. It MUST take one of the values Completed, Deprecated, Under Development, Withdrawn. 
+          min: 0
+          max: 1
+        - name: temporal resolution
+          term: dcat:temporalResolution
+          range: xsd:duration
+          description: This property refers to the minimum time period resolvable in the dataset distribution.
+          min: 0
+          max: n
+        - name: temporal coverage
+          term: dct:temporal
+          range: dct:PeriodOfTime
+          description: This property refers to a temporal period that the Distribution covers.
+          min: 0
+          max: n
+          extension: True
+        - name: title
+          term: dct:title
+          range: rdfs:Literal
+          description: This property contains a name given to the Distribution. This property can be repeated for parallel language versions of the description.
+          min: 0
+          max: n
+        - name: update/ modification date
+          term: dct:modified
+          range: rdfs:Literal typed as xsd:date or xsd:dateTime
+          description: This property contains the most recent date on which the Distribution was changed or modified.
+          min: 0
+          max: 1
+        - name: Geographical accuracy
+          term: dcat:spatialResolutionInMeters
+          range: rdfs:Literal typed as xsd:decimal
+          description: This property tells the accuracy of geospatial data in meters
+          min: 0
+          max: 1
+
+  - title: Data Service
+    description: A collection of operations that provides access to one or more datasets or data processing functions.
+    term: DataService
+    properties:
+      mandatory:
+        - name: endpoint URL 
+          term: dcat:endpointURL
+          range: rdfs:Resource
+          description: The root location or primary endpoint of the service (an IRI).
+          min: 1
+          max: n
+        - name: title
+          term: dct:title
+          range: rdfs:Literal
+          description: This property contains a name given to the Data Service. This property can be repeated for parallel language versions of the name.
+          min: 1
+          max: n
+      recommended:
+        - name: endpoint description 
+          term: dcat:endpointDescription
+          range: rdfs:Resource
+          description: This property contains a  description of the services available via the end-points, including their operations, parameters etc.The property gives specific details of the actual endpoint instances, while dct:conformsTo is used to indicate the general standard or specification that the endpoints implement.
+          min: 0
+          max: n
+      optional:
+        - name: access rights
+          term: dct:accessRights
+          range: dct:RightsStatement
+          description: This property MAY include information regarding access or restrictions based on privacy, security, or other policies.
+          min: 0
+          max: 1
+        - name: description
+          term: dct:description
+          range: rdfs:Literal
+          description: This property contains a free-text account of the Data Service. This property can be repeated for parallel language versions of the description.
+          min: 0
+          max: n
+        - name: licence
+          term: dct:license
+          range: dct:LicenseDocument
+          description: This property contains  the licence under which the Data service is made available.
+          min: 0
+          max: 1
+
+
+  - title: Showcase
+    description: A conceptual entity that represents the information about showcase.
+    term: Showcase
+    subclassOf: dcat:Resource
+    properties:
+      mandatory:
+        - name: Description 
+          term: dcat:description
+          range: rdfs:Resource
+          description: This property contains a free-text account of the Showcase. This property can be repeated for parallel language versions of the description.
+          min: 1
+          max: n
+        - name: title
+          term: dct:title
+          range: rdfs:Literal
+          description: This property contains a name given to the Showcase. This property can be repeated for parallel language versions of the name.
+          min: 1
+          max: n
+        - name: DataUserInterface
+          term: adfi:dataUserInterface
+          range: rdfs:Literal
+          description: The showcase’s URL on Suomi.fi Open Data. The URL is created automatically based on the publisher’s name. You can edit the URL if you want.
+          min: 1
+          max: 1
+      recommended:
+        - name: theme/ category
+          term: dcat:theme, subproperty of dct:subject
+          range: skos:Concept
+          description: This property refers to a category of the Showcase. A Showcase may be associated with multiple themes.
+          min: 0
+          max: n
+        - name: platform
+          term: adfi:platform
+          range: rdfs:Literal
+          description: If you have created a mobile or desktop showcase, select which platforms it supports.
+          min: 0
+          max: n
+        - name: keywords
+          term: dcat:keyword
+          range: rdfs:Literal
+          description: Keywords help users to find your showcase. Select at least one keyword in Finnish.
+          min: 0
+          max: n
+        - name: author
+          term: dct:creator
+          range: foaf:name
+          description: Developer of showcase
+          min: 1
+          max: 1
+        - name: author website
+          term: adfi:creatorWebsiteUri
+          range: rdfs:Literal
+          description: Website of developer
+          min: 0
+          max: 1
+        - name: application website
+          term: dcat:landingPage
+          range: rdfs:Literal
+          description: Website of showcase
+          min: 0
+          max: 1
+        - name: store urls
+          term: adfi:distributor
+          range: rdfs:Literal
+          description: Distributor urls
+          min: 0
+          max: n
+        - name: notes
+          term: dct:description
+          range: rdfs:Literal
+          description: A short and descriptive explanation about the showcase. Tell for example about possible applications and the creation process, as well as about how open data has been used in the showcase.
+          min: 1
+          max: n
+        - name: image url
+          term: adfi:applicationIcon
+          range: rdfs:Literal
+          description: A short and descriptive explanation about the showcase. Tell for example about possible applications and the creation process, as well as about how open data has been used in the showcase.
+          min: 0
+          max: 1
+        - name: preview media
+          term: adfi:previewMedia
+          range: rdfs:Literal
+          description: Add max. 3 images of your showcase. Good images are for example those that show the user interface and features of the showcase.
+          min: 0
+          max: 3
+        - name: archived
+          term: adfi:archived
+          range: rdfs:Literal
+          description: Tells if showcase is archived
+          min: 0
+          max: 1

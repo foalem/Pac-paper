@@ -1,0 +1,62 @@
+{{ with .Values.disallowUnsignedImages }}
+{{ if .enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ .name }}
+  annotations:
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/category: DockerImage
+    policies.kyverno.io/title: Disallow Unsigned Images
+    pod-policies.kyverno.io/autogen-controllers: none
+    policies.kyverno.io/description: >-
+      Images needs to be signed with a specific private cosign key
+spec:
+  webhookConfiguration:
+    failurePolicy: {{ .failurePolicy }}
+    timeoutSeconds: {{ .timeoutSeconds }}
+  useServerSideApply: true
+  validationFailureAction: Enforce
+  rules:
+    - name: "{{ .name }}-rule"
+      match:
+        any:
+          - resources:
+              operations:
+                - CREATE
+                - UPDATE
+              kinds:
+                - Pod
+    {{- with .excludeNamespaces}}
+      exclude:
+        any:
+          - resources:
+              namespaces:
+            {{- range . }}
+                - {{ . }}
+            {{- end }}
+      {{- end }}
+      verifyImages:
+    {{- range .imagesAndPublicKeyPairs }}
+        - type: Cosign
+          imageReferences:
+            - {{ .image | quote}}
+        {{- if .pullSecret }}
+          imageRegistryCredentials:
+            secrets:
+              - {{ .pullSecret }}
+        {{- end }}
+          required: true
+          mutateDigest: true
+          verifyDigest: true
+          attestors:
+            - entries:
+                - keys:
+                    publicKeys: |-
+{{ .key | indent 24 }}
+                    rekor:
+                      ignoreTlog: {{ .ignoreTransparencyLog | default true }}
+    {{- end }}
+{{ end }}
+{{ end }}

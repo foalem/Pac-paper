@@ -1,0 +1,170 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  annotations:
+    argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
+    argocd.argoproj.io/sync-options: PruneLast=true
+    argocd.argoproj.io/sync-wave: "-2"
+  creationTimestamp: null
+  name: ops
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  description: ops project
+  destinations:
+    - namespace: "*"
+      server: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  sourceRepos:
+    - "*"
+status: {}
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  creationTimestamp: null
+  name: ops
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        files:
+          - path: apps/**/ops/config.json
+        repoURL: https://github.com/devxp-tech/gitops.git
+        requeueAfterSeconds: 20
+        revision: ""
+        template:
+          metadata: {}
+          spec:
+            destination: {}
+            project: ""
+            source:
+              repoURL: ""
+    - git:
+        files:
+          - path: apps/**/ops/config_dir.json
+        repoURL: https://github.com/devxp-tech/gitops.git
+        requeueAfterSeconds: 20
+        revision: ""
+        template:
+          metadata: {}
+          spec:
+            destination: {}
+            project: ""
+            source:
+              directory:
+                exclude: "{{ exclude }}"
+                include: "{{ include }}"
+                jsonnet: {}
+                recurse: true
+              repoURL: ""
+    - git:
+        files:
+          - path: apps/**/ops/config.yaml
+        repoURL: https://github.com/devxp-tech/gitops.git
+        requeueAfterSeconds: 20
+        revision: ""
+        template:
+          metadata:
+            name: "{{userGivenName}}-ops"
+          spec:
+            destination: {}
+            project: ""
+            source:
+              chart: "{{ helm.chart }}"
+              helm:
+                valueFiles:
+                  - "{{helm.valueFiles}}.yaml"
+                values: |-
+                  {{ helm.values }}
+              repoURL: ""
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: argocd-autopilot
+        app.kubernetes.io/name: "{{ appName }}"
+      annotations:
+        # notifications.argoproj.io/subscribe.on-sync-succeeded.slack: argocd-notifications
+        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd-notifications
+        notifications.argoproj.io/subscribe.on-sync-status-unknown.slack: argocd-notifications
+        notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd-notifications
+        # notifications.argoproj.io/subscribe.on-deployed.slack.slack: argocd-notifications
+        notifications.argoproj.io/subscribe.on-sync-succeeded.grafana: argocd-notifications
+      name: "{{ userGivenName }}-ops"
+      namespace: argocd
+    spec:
+      destination:
+        namespace: "{{ destNamespace }}"
+        server: "{{ destServer }}"
+      ignoreDifferences:
+        - group: "*"
+          kind: "StatefulSet"
+          jqPathExpressions:
+            - .spec.persistentVolumeClaimRetentionPolicy
+        - group: argoproj.io
+          jsonPointers:
+            - /status
+          kind: Application
+        - group: kyverno.io
+          kind: ClusterPolicy
+          jqPathExpressions:
+            - .spec.rules[] | select(.name|test("autogen-."))
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: certificaterequests.cert-manager.io
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: certificates.cert-manager.io
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: challenges.cert-manager.io
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: challenges.acme.cert-manager.io
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: clusterissuers.cert-manager.io
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: issuers.cert-manager.io
+        - group: apiextensions.k8s.io
+          jsonPointers:
+            - /status
+          kind: CustomResourceDefinition
+          name: orders.acme.cert-manager.io
+      project: ops
+      source:
+        path: "{{ srcPath }}"
+        repoURL: "{{ srcRepoURL }}"
+        targetRevision: "{{ srcTargetRevision }}"
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace={{ CreateNamespace }}
+          # - ServerSideApply=true
+          # - Replace=true
+status: {}

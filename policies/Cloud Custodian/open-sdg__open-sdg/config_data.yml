@@ -1,0 +1,64 @@
+# These settings are used by the Python functions open_sdg_build() and
+# open_sdg_check(), from sdg-build.
+
+# List of languages.
+languages:
+  - en
+  - es
+  - fr
+
+# Where the data gets built.
+site_dir: _build
+
+# The file to use for the metadata schema.
+schema_file: _prose.yml
+
+# The parent folder of the 'meta' and 'data' folders.
+src_dir: ''
+
+inputs:
+  - class: InputCsvData
+    path_pattern: data/*-*.csv
+  - class: InputYamlMdMeta
+    path_pattern: meta/*-*.md
+    git: false
+    git_data_dir: data
+  - class: InputYamlMeta
+    path_pattern: indicator-config/*.yml
+    git: false
+
+translations:
+  - class: TranslationInputYaml
+    source: translations
+  - class: TranslationInputYaml
+    source: custom-translations
+
+map_layers:
+  - geojson_file: england-regions.geojson
+    name_property: rgn17nm
+    id_property: rgn17cd
+    exclude_columns:
+      - Region
+
+reporting_status_extra_fields:
+  - un_custodian_agency
+
+docs_subfolder: documentation
+
+datapackage:
+  sorting: alphabetical
+
+data_schema:
+  class: DataSchemaInputTableSchemaYaml
+  source: data-schema/*.yml
+
+indicator_options:
+  non_disaggregation_columns:
+    - Year
+    - Units
+    - Series
+    - Value
+    - GeoCode
+    - COMMENT_TS
+  observation_attributes:
+    - COMMENT_OBS

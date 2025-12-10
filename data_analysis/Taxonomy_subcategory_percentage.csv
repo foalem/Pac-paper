@@ -1,0 +1,18 @@
+,taxonomy,sub_taxonomy,pct_within_taxonomy
+0,Compliance Governance,Resource Compliance,73.7
+1,Compliance Governance,Standards Enforcement,18.4
+2,Compliance Governance,Service Compliance,5.3
+3,Compliance Governance,Third-party License,2.6
+4,Cost Optimization,nan,100.0
+5,Deployment Governance,Access Control,88.0
+6,Deployment Governance,Key Management,12.0
+7,Security Governance,Access Control,35.6
+8,Security Governance,Configuration Validation,29.6
+9,Security Governance,Resource Management,13.3
+10,Security Governance,Network Management,5.2
+11,Security Governance,Workloads Management,4.7
+12,Security Governance,Secrets Management,3.4
+13,Security Governance,Vulnerability Management,3.4
+14,Security Governance,Actions Restrictions,2.6
+15,Security Governance,Security Review Compliance,2.1
+16,Workflow Automation,nan,100.0

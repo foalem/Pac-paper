@@ -1,0 +1,35 @@
+full_name,created_at,updated_at,size,stargazers_count,language,has_issues,forks_count,archived,open_issues_count,topics,open_issues,description,fork
+freepik-company/admitik,2024-10-29T01:42:17Z,2025-05-09T14:30:53Z,815,12,Go,True,0,False,1,"admission,golang,gotmpl,kubernetes,mutation,operator,starlark",1,🛡️ Kubernetes admission controller that validates or modifies resources based on conditions defined using powerful templates.,False
+jparrill/safe-naming-policy,2022-08-09T05:55:55Z,2022-08-10T12:12:47Z,308,0,Go,True,0,False,0,,0,Kubewarden policy which validates the pod name and allow or disallow the deployment,False
+rancher/kubewarden-ui,2021-11-08T15:54:48Z,2025-05-06T09:14:14Z,81862,12,TypeScript,True,16,False,22,"dashboard,hacktoberfest,kubernetes,kubernetes-security,rancher",22,Kubewarden's User Interface ,False
+SUSE-Rancher-Community/CNCF-kubewarden-webinar,2022-11-30T08:24:17Z,2022-12-05T05:05:38Z,1568,1,,True,1,False,0,,0,Content presented by Divya during the CNCF Kubewarden webinar held on 30th Nov 2022.,False
+Martin-Weiss/rancher-fleet,2022-05-11T13:18:30Z,2025-04-29T06:52:40Z,276,11,Shell,True,6,False,0,,0,Deploy Addons via Rancher Fleet,False
+ginoh/sandbox,2021-07-18T15:25:24Z,2023-01-31T19:01:15Z,356,0,Go,True,0,False,1,,1,,False
+portefaix/portefaix-hub,2020-12-02T11:50:41Z,2025-05-02T15:13:43Z,4107,6,Mustache,True,12,False,11,"galactus,helm,kubernetes,portefaix",11,Portefaix Helm charts,False
+vfarcic/kubewarden-demo,2023-12-04T22:10:58Z,2024-02-13T20:02:34Z,1,0,,True,0,False,0,,0,,False
+kubewarden/helm-charts,2021-03-03T11:18:23Z,2025-05-09T19:43:33Z,2059,27,Smarty,True,17,False,16,hacktoberfest,16,Helm charts for the Kubewarden project,False
+fabriziosestito/kw-policy-zig,2023-04-27T08:37:09Z,2024-11-06T17:18:22Z,23,1,Zig,True,0,False,0,"kubewarden,kubewarden-policy,wapc,wasm,zig",0,Kubewarden policy in Zig,False
+bgulla/fleet-iac,2023-07-26T16:37:48Z,2024-08-14T21:03:18Z,339,2,Mustache,True,0,False,0,,0,continuous delivery via Rancher's Fleet,False
+SUSE/razor-crest-eks-cluster,2021-06-08T12:21:53Z,2021-06-11T13:37:45Z,15,0,HCL,True,0,False,0,,0,,False
+kalug/k8s-demo,2025-01-16T00:30:01Z,2025-02-11T03:59:04Z,162,1,Shell,True,0,False,0,,0,,False
+viccuad/rego-policies,2024-06-21T14:15:33Z,2024-12-17T13:55:56Z,113,0,Open Policy Agent,True,1,False,1,,1,,False
+dariuszbolkowski/ezdrp_process,2023-12-05T08:42:43Z,2024-08-23T06:36:55Z,55902,0,Smarty,True,0,False,1,,1,,False
+kubewarden/kubewarden-end-to-end-tests,2021-12-01T13:37:39Z,2025-04-30T07:43:08Z,272,2,Shell,True,7,False,11,"hacktoberfest,kubernetes,kubernetes-security,policy-as-code,webassembly",11,Files used to run Kubewarden end-to-end tests,False
+hugginsio/homelab,2022-11-16T18:18:21Z,2025-02-20T03:46:47Z,997,0,HTML,True,0,False,11,"docker,fluxcd,gitops,homelab,k8s-at-home,kubernetes,talos",11,Kubernetes and GitOps at home,False
+atoy3731/kubewarden-fleet,2022-09-07T01:18:21Z,2022-09-07T01:18:21Z,9,0,,True,0,False,0,,0,,False
+fminna/LLM-Helm-Fix,2024-03-25T15:30:13Z,2024-12-02T19:42:44Z,93948,1,Python,True,2,False,1,,1,Pipeline to fix Helm misconfigurations using LLM,False
+atoy3731/istio-demo-app,2022-06-26T20:30:46Z,2022-09-30T01:06:31Z,83,1,Go,True,0,False,0,,0,,False
+atoy3731/aws-howdypartner-demo,2023-08-07T13:06:16Z,2025-02-05T16:39:22Z,113,0,Smarty,True,0,False,0,,0,,False
+kamano905/kubewarden-executable-tutorial,2024-10-10T11:59:56Z,2024-10-15T12:49:26Z,59,0,Open Policy Agent,True,0,False,0,,0,,False
+portefaix/portefaix-policies,2021-02-28T19:10:08Z,2025-01-05T14:44:24Z,346,1,Open Policy Agent,True,2,False,2,"galactus,opa,portefaix,rego",2,Portefaix Policies,False
+raulcabello/kubewarden-fleet,2022-06-28T14:26:27Z,2022-06-28T14:27:11Z,73,0,Smarty,True,0,False,0,,0,,False
+jordojordo/kubewarden-pkg,2022-07-07T14:51:43Z,2022-07-07T14:59:21Z,22131,0,Vue,True,0,False,0,,0,,False
+hierynomus/lab-setup,2025-02-11T13:36:44Z,2025-05-06T18:18:31Z,241,1,HCL,True,2,False,1,,1,,False
+raesene/admission_controllers,2021-05-15T16:54:29Z,2022-01-04T12:54:50Z,26,1,,True,1,False,0,,0,,False
+noetarbouriech/k8s-clam,2025-04-23T07:59:46Z,2025-05-01T16:34:35Z,1751,0,TypeScript,True,0,False,0,,0,Kubernetes cluster but secure™,False
+moio/terraform-kubewarden,2022-07-09T22:53:19Z,2022-07-09T22:53:49Z,10,0,HCL,True,0,False,0,,0,Quickly creates local test beds for Kubewarden,False
+codacy-open-source-projects-scans/kubewarden-controller,2024-03-21T07:06:25Z,2024-12-18T21:50:28Z,974,0,Go,False,0,False,0,,0,This is frozen/no-commits mirror of the https://github.com/kubewarden/kubewarden-controller.git,False
+vfarcic/cncf-demo,2022-11-11T19:47:35Z,2025-05-03T13:15:03Z,3105,224,Go,True,56,False,1,,1,,False
+kubewarden/kubewarden.io,2020-11-19T08:41:29Z,2025-05-09T19:39:50Z,15664,11,SCSS,True,16,False,11,"hacktoberfest,kubernetes,kubernetes-security,policy-as-code,webassembly",11,Kubewarden website,False
+divya-mohan0209/kubewarden-webinar,2022-11-08T04:41:12Z,2022-11-30T12:12:53Z,1033,0,,True,0,False,0,,0,Repository for CNCF webinar of Kubewarden,False
+appvia/psp-migration,2021-11-22T15:55:53Z,2025-04-26T07:20:18Z,17343,50,TypeScript,True,4,False,20,"gatekeeper,hacktoberfest,k8s,kubernetes,kubernetes-security,kubewarden,kyverno,opa,pod-security-policy,podsecuritypolicies,podsecuritypolicy,policy-as-code,psp,security,yaml",20,Recreation of common Pod Security Policy configuration in other common Kubernetes policy engines,False

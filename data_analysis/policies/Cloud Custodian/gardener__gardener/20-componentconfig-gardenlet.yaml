@@ -1,0 +1,195 @@
+---
+apiVersion: gardenlet.config.gardener.cloud/v1alpha1
+kind: GardenletConfiguration
+gardenClientConnection:
+  qps: 100
+  burst: 130
+# kubeconfigValidity:
+#   validity: 24h
+#   autoRotationJitterPercentageMin: 70
+#   autoRotationJitterPercentageMax: 90
+seedClientConnection:
+  qps: 100
+  burst: 130
+shootClientConnection:
+  qps: 25
+  burst: 50
+controllers:
+  bastion:
+    concurrentSyncs: 20
+  backupBucket:
+    concurrentSyncs: 20
+  backupEntry:
+    concurrentSyncs: 20
+    deletionGracePeriodHours: 0
+  # deletionGracePeriodShootPurposes:
+  # - production
+  controllerInstallation:
+    concurrentSyncs: 20
+  controllerInstallationCare:
+    concurrentSyncs: 20
+    syncPeriod: 30s
+  controllerInstallationRequired:
+    concurrentSyncs: 1
+  gardenlet:
+    syncPeriod: 1h
+  networkPolicy:
+    concurrentSyncs: 5
+  # additionalNamespaceSelectors:
+  # - matchLabels:
+  #     foo: bar
+  shoot:
+    concurrentSyncs: 20
+    syncPeriod: 1h
+    retryDuration: 12h
+  # `respectSyncPeriodOverwrite` specifies whether Shoot owners can
+  # mark their Shoots ignored (no reconciliation) or change their sync Period.
+#   respectSyncPeriodOverwrite: true
+  # `reconcileInMaintenanceOnly` specifies whether Shoot reconciliations
+  # can only happen during their maintenance time window or not.
+#   reconcileInMaintenanceOnly: true
+  # `progressReportPeriod` specifies how often the progress of a shoot operation shall be reported in its status.
+#   progressReportPeriod: 5s
+#   dnsEntryTTLSeconds: 120
+  shootCare:
+    concurrentSyncs: 5
+    syncPeriod: 30s
+    staleExtensionHealthChecks:
+      enabled: true
+    # threshold: 5m
+    managedResourceProgressingThreshold: 1h
+    conditionThresholds:
+    - type: APIServerAvailable
+      duration: 1m
+    - type: ControlPlaneHealthy
+      duration: 1m
+    - type: ObservabilityComponentsHealthy
+      duration: 1m
+    - type: SystemComponentsHealthy
+      duration: 1m
+    - type: EveryNodeReady
+      duration: 5m
+    webhookRemediatorEnabled: false
+  shootState:
+    concurrentSyncs: 5
+    syncPeriod: 6h
+  shootStatus:
+    concurrentSyncs: 5
+  seed:
+    syncPeriod: 1h
+  # leaseResyncSeconds: 2
+  # leaseResyncMissThreshold: 10
+  seedCare:
+    syncPeriod: 30s
+    conditionThresholds:
+    - type: SeedSystemComponentsHealthy
+      duration: 1m
+  managedSeed:
+    concurrentSyncs: 5
+    syncPeriod: 1h
+    waitSyncPeriod: 15s
+    syncJitterPeriod: 5m
+  tokenRequestor:
+    concurrentSyncs: 5
+  tokenRequestorWorkloadIdentity:
+    concurrentSyncs: 5
+  vpaEvictionRequirements:
+    concurrentSyncs: 5
+resources:
+  capacity:
+    shoots: 200
+leaderElection:
+  leaderElect: true
+  leaseDuration: 15s
+  renewDeadline: 10s
+  retryPeriod: 2s
+  resourceLock: leases
+  resourceNamespace: garden
+  resourceName: gardenlet-leader-election
+logLevel: info
+logFormat: text
+server:
+  healthProbes:
+    port: 2728
+  metrics:
+    port: 2729
+debugging:
+  enableProfiling: false
+  enableContentionProfiling: false
+featureGates:
+  DefaultSeccompProfile: true
+# seedConfig:
+#   metadata:
+#     name: my-seed
+#   spec:
+#     <Check out the `spec` in the `50-seed.yaml` file to see what's possible to configure here>
+logging:
+  enabled: true
+  vali:
+    enabled: true
+  shootNodeLogging:
+    shootPurposes:
+    - "infrastructure"
+    - "production"
+    - "development"
+    - "evaluation"
+# logging:
+#   enabled: false
+#   vali:
+#     enabled: true
+#     garden:
+#       storage: "100Gi"
+#   shootNodeLogging:
+#     shootPurposes:
+#     - "development"
+#   shootEventLogging:
+#     enabled: true
+# sni:
+#   ingress:
+#     serviceName: istio-ingress
+#     namespace: istio-ingress
+#     serviceExternalIP: 10.8.10.10 # Optional external ip for the ingress gateway load balancer.
+#     labels:
+#       istio: ingressgateway
+# exposureClassHandlers:
+# - name: internet-config
+#   loadBalancerService:
+#     annotations:
+#       loadbalancer/network: internet
+# - name: internal-config
+#   loadBalancerService:
+#     annotations:
+#       loadbalancer/network: internal
+#   sni:
+#     ingress:
+#       namespace: ingress-internal
+#       serviceExternalIP: 10.8.10.11 # Optional external ip for the ingress gateway load balancer.
+#       labels:
+#         network: internal
+etcdConfig:
+  etcdController:
+    workers: 3
+  custodianController:
+    workers: 3
+  backupCompactionController:
+    workers: 3
+    enableBackupCompaction: false
+    eventsThreshold: 1000000
+    activeDeadlineDuration: "3h"
+    metricsScrapeWaitDuration: "60s"
+  deltaSnapshotRetentionPeriod: 48h
+# backupLeaderElection:
+#   reelectionPeriod: 5s
+#   etcdConnectionTimeout: 5s
+# monitoring:
+#   shoot:
+#     enabled: true
+#     remoteWrite:
+#       url: https://remoteWriteUrl # remote write URL
+#       keep: # metrics that should be forwarded to the external write endpoint. If empty all metrics get forwarded
+#       - kube_pod_container_info
+#     externalLabels: # add additional labels to metrics to identify it on the central instance
+#       additional: label
+nodeToleration:
+  defaultNotReadyTolerationSeconds: 60
+  defaultUnreachableTolerationSeconds: 60

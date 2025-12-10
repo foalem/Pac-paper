@@ -1,0 +1,395 @@
+SDG_GOAL: '<p>Goal 12: Ensure sustainable consumption and production patterns</p>'
+SDG_TARGET: >-
+  <p>Target 12.6: Encourage companies, especially large and transnational
+  companies, to adopt sustainable practices and to integrate sustainability
+  information into their reporting cycle</p>
+SDG_INDICATOR: '<p>Indicator 12.6.1: Number of companies publishing sustainability reports</p>'
+SDG_SERIES_DESCR: >-
+  <p>Number of companies publishing sustainability reports with disclosure by
+  dimension, by level of requirement (Number) EN_SCP_FRMN</p>
+META_LAST_UPDATE: '2023-03-31'
+SDG_RELATED_INDICATORS: <p>Not applicable</p>
+SDG_CUSTODIAN_AGENCIES: |-
+  <p>United Nations Conference on Trade and Development (UNCTAD)</p>
+  <p>United Nations Environment Programme (UNEP)</p>
+CONTACT_ORGANISATION: |-
+  <p>United Nations Conference on Trade and Development (UNCTAD)</p>
+  <p>United Nations Environment Programme(UNEP)</p>
+STAT_CONC_DEF: >-
+  <p><strong>Definitions:</strong></p>
+
+  <p><u>Sustainability Reports</u>: </p>
+
+  <p>For the purposes of this indicator, &#x2018;sustainability reports&#x2019;
+  will not be limited to stand-alone sustainability reports produced by
+  companies, but will be considered as &#x2018;reporting sustainability
+  information&#x2019; and expanded to other forms of reporting sustainability
+  information, such as publishing sustainability information as part of the
+  company&#x2019;s annual reports or reporting sustainability information to the
+  national government. This is to ensure that the focus of the indicator is on
+  tracking the publishing of sustainability information, rather than on the
+  practice of publishing stand-alone sustainability reports. It also ensures
+  that the indicator interpretation is aligned with the wording of Target 12.6
+  which refers to promoting &#x201C;the integration of sustainability
+  information into the annual reporting cycle of companies&#x201D;. </p>
+
+  <p><u>Company:</u></p>
+
+  <p>While many companies report at the group level, many of their impacts will
+  be local, and some subsidiaries or franchises produce separate sustainability
+  reports. As a practice that should be encouraged, and one that is useful to
+  monitor, it is therefore proposed to count both the group and
+  subsidiary/franchise level separately, as separate entities.
+  &#x201C;Company&#x201D; can therefore apply to either the parent company, or a
+  franchise or subsidiary, depending on their reporting practices.</p>
+
+  <p><strong>Concepts:</strong></p>
+
+  <p>It is proposed that, to be counted towards the indicator, companies are
+  encouraged to publish information that meets a &#x201C;Minimum
+  requirement&#x201D; of disclosure. A core set of economic, environmental,
+  social and governance disclosures of sustainability information is therefore
+  identified. In defining these disclosure elements, the custodian agencies
+  attempted to align with the disclosures that appear in existing related
+  reporting frameworks, including the International Integrated Reporting Council
+  (IIRC) reporting framework, the Global Reporting Initiative Standard (GRI),
+  the Sustainability Accounting Standards Board (SASB) (see Annex I for a
+  comparison of the various sustainability disclosures contained under each.</p>
+
+  <p>It also attempts to align with the UNCTAD Core Indicators for company
+  reporting on the contribution towards the attainment of the Sustainable
+  Development Goals. UNCTAD has prepared Guidance on Core indicators for entity
+  reporting on the contribution towards the attainment of the Sustainable
+  Development Goals (SDGs) to support entities in the provision of information
+  under indicator 12.6.1 and governments in assessing the private sector
+  contribution to the SDGs. The Guidance reflects the Agreed Conclusions of the
+  thirty-fourth session of the Intergovernmental Working Group of Experts on
+  International Standards of Accounting and Reporting (ISAR), which in 2017
+  requested UNCTAD to develop the guiding document. The UNCTAD Guidance includes
+  detailed definitions and data sources for the core indicators in the company
+  accounts to assist the entities in the reporting.</p>
+
+  <p>The purpose is not to create a new reporting standard or framework, but to
+  ensure that the minimum reporting recommendations for Indicator 12.6.1 are
+  aligned with existing global frameworks currently used by companies, so that
+  they may continue to use these frameworks.</p>
+
+  <p>While establishing a minimum recommendations in terms of reporting enables
+  companies disclosing meaningful information on all aspects of sustainability
+  to be counted towards the indicator, it could be perceived as giving the
+  message that the minimum suffices and that companies do not need to go beyond
+  it. </p>
+
+  <p>Therefore, it is proposed that the methodology include an advanced level,
+  with a further set of disclosure elements, which would further provide impetus
+  for examining and reporting on the sustainability practices and impacts of the
+  company. These include: 1) stakeholder engagement, 2) assessing impacts beyond
+  the company boundaries and along the supply chain; 3) supplier and consumer
+  engagement on sustainability issues; 4) procurement and sourcing practices;
+  and 5) environmental performance information in the form of intensity values
+  to be monitored over time, such as consumption of energy, water or materials
+  per unit of production or per unit of profit.</p>
+
+  <p>Having different levels will also allow for information to be collected on
+  the degree of reporting of different companies, including whether the same
+  companies produce more ambitious reports, and go further in their
+  sustainability practices with time, such as through supplier engagement. It
+  would allow for companies who are beginning to produce sustainability reports
+  to provide incentive, through their inclusion in the indicator count, for them
+  to work towards more ambitious reporting and demonstrate their progress over
+  time.</p>
+UNIT_MEASURE: <p>Number of companies</p>
+CLASS_SYSTEM: |-
+  <ul>
+    <li>Standard Country or Area Codes for Statistical Use (UN M49 classification of countries and regions);International Standard Industrial Classification of All Economic Activities (ISIC), Rev.4.</li>
+  </ul>
+SOURCE_TYPE: |-
+  <ul>
+    <li>National and international reports published on ESG rating platforms, global report aggregators (Refinitive)</li>
+  </ul>
+COLL_METHOD: |-
+  <ul>
+    <li>The Custodian Agencies will mine existing global report aggregators, to analyse the reports included in their databases in order to: </li>
+    <li>Provide country specific information.</li>
+    <li>Aggregate data at sub-regional, regional and global levels (avoiding double-counting of the same companies).</li>
+    <li>Disaggregate data (company size, per industry).</li>
+    <li>The platform monitored will enable to aggregate e data to obtain a global figure as well as data per UN sub-region and region for inclusion in the Global SDGs Database, and as a basis for the analysis of progress carried out annually for the United Nations <em>Sustainable Development Goals Report</em> and the Secretary General&#x2019;s Report on Progress towards the Sustainable Development Goals.</li>
+    <li>While common definitions of company size, industries (defined below), etc. are required to be used by the custodian agencies for analysis and aggregation at regional and global levels and reporting to the SDGs Report, national governments may choose to use different definitions for their own analysis and reporting, such as for their Voluntary National Reviews (VNRs). Filters will be included on the online platform for the database which will allow governments and other users to filter information according to their own national definitions.</li>
+  </ul>
+FREQ_COLL: >-
+  <p>First data collection: Expected in early 2020 for 2019 company reports,
+  </p>
+
+  <p>Annually thereafter</p>
+REL_CAL_POLICY: '<p>First reporting cycle: 2020, Annually thereafter.</p>'
+DATA_SOURCE: >-
+  <p>National and international companies through ESG rating platforms and
+  global report aggregators.</p>
+COMPILING_ORG: >-
+  <p>United Nations Conference on Trade and Development (UNCTAD) and United
+  Nations Environment Programme (UNEP) </p>
+INST_MANDATE: >-
+  <p>United Nations Conference on Trade and Development (UNCTAD) and United
+  Nations Environment Programme (UNEP) were mandated as Custodian Agencies for
+  indicator 12.6.1 by the Inter-agency and Expert Group on SDG Indicators. </p>
+RATIONALE: >-
+  <p>While the private sector has a critical role to play in the attainment of
+  the SDGs, Target 12.6 and Indicator 12.6.1 are the only ones specifically
+  monitoring the practices of private sector entities. While Indicator 12.6.1
+  counts the number of companies producing &#x201C;sustainability
+  reports&#x201D;, the custodian agencies consider the indicator an important
+  opportunity not only to monitor and promote the growth in sustainability
+  reporting globally, but also to monitor and promote high quality reporting,
+  promote the integration of sustainability information into the annual
+  reporting cycle of companies, and promote sustainability practices by
+  companies (as mentioned in the Target under which the indicator falls).
+  Attempts have therefore been made to integrate all of these aspects into the
+  methodology, to the extent possible to encourage companies to advance the
+  quality of sustainability reporting by disclosing baseline indicators across
+  economic, environmental, social and institutional dimensions (for more
+  details, please consult Minimum and Advanced recommendations below)</p>
+REC_USE_LIM: >-
+  <p>The indicator is limited by the number of reports published on ESG rating
+  platforms and collected by global report aggregators.</p>
+
+  <p>The analytics are carried out in all official UN languages and a variety of
+  other languages, but not all national languages are covered. Therefore, there
+  could be some reports that cannot be captured for this reason.</p>
+DATA_COMP: >-
+  <p>Companies will be mostly counted towards the indicator by acknowledging
+  publishing sustainability information covering the following sustainability
+  disclosures:</p>
+
+  <p><strong>Minimum reporting recommendations:</strong></p>
+
+  <p><strong>Institutional and governance: </strong></p>
+
+  <ul>
+    <li>Materiality assessment<sup><a href="#footnote-2" id="footnote-ref-2">[1]</a></sup></li>
+    <li>Sustainability strategy and/or principles related to sustainability</li>
+    <li>Management approach to address materiality topics</li>
+    <li>Governance structure, including for economic, environmental and social issues</li>
+    <li>Key impacts, risks, opportunities </li>
+    <li>Anti-fraud, anti-corruption and anti-competitive behaviour practices</li>
+  </ul>
+
+  <p><strong>Economic:</strong></p>
+
+  <ul>
+    <li>Direct measure of economic performance (revenue, net profit, value added, pay-outs to shareholders)</li>
+    <li>Indirect measure of economic performance (community investment, investment in infrastructure or other significant local economic impact)</li>
+  </ul>
+
+  <p><strong>Environmental:</strong></p>
+
+  <ul>
+    <li>Energy consumption and energy efficiency</li>
+    <li>Water consumption, wastewater generation, integrated water resource management practices, or water recycling/re-use and efficiency</li>
+    <li>Greenhouse gas emissions</li>
+    <li>Other emissions and effluents, including Ozone-depleting substances, Nitrogen Oxides (NOX), Sulphur Oxides (SOX), and chemicals</li>
+    <li>Waste generation, including hazardous wastes</li>
+    <li>Waste minimisation and recycling practices</li>
+    <li>Use and/or production of hazardous chemicals and substances</li>
+  </ul>
+
+  <p><strong>Social:</strong></p>
+
+  <ul>
+    <li>Occupational health and safety</li>
+    <li>Total number of employees, by contract type and gender</li>
+    <li>Employee training </li>
+    <li>Unfair and illegal labour practices and other human rights considerations</li>
+    <li>Diversity, equal opportunity and discrimination in governance bodies and among employees</li>
+    <li>Worker rights and collective agreements</li>
+  </ul>
+
+  <p>Advanced level reporting recommendations :</p>
+
+  <p>As for minimum requirement, with the following additional disclosures
+  and/or indicators: </p>
+
+  <p><strong>Institutional and governance: </strong></p>
+
+  <ul>
+    <li>Details of supply chain</li>
+    <li>Details of stakeholder engagement surrounding sustainability performance</li>
+    <li>Details of remuneration</li>
+  </ul>
+
+  <p><strong>Economic</strong></p>
+
+  <ul>
+    <li>Sustainable public procurement policies and practices</li>
+    <li>Percentage or proportion of local suppliers/procurement</li>
+    <li>Charitable donations</li>
+  </ul>
+
+  <p><strong>Environmental</strong></p>
+
+  <ul>
+    <li>Supplier environmental assessment</li>
+    <li>Material consumption, sourcing of materials and reclaimed or recycled materials used</li>
+    <li>Energy intensity and renewable energy sources</li>
+    <li>Water intensity and Integrated water resource management</li>
+    <li>GHG intensity</li>
+    <li>Waste intensity</li>
+    <li>Biodiversity impacts</li>
+    <li>Supplier and consumer/customer engagement on environmental issues</li>
+  </ul>
+
+  <p><strong>Social</strong></p>
+
+  <ul>
+    <li>Supplier social assessment</li>
+    <li>Local community impacts</li>
+    <li>Supplier and consumer engagement on sustainability issues</li>
+  </ul><div class="footnotes"><div><sup class="footnote-number"
+  id="footnote-2">1</sup><p><em>In the context of the SDG reporting, materiality
+  should take on the broadest possible scope for all industries. Adoption of the
+  Goals required multi-stakeholder consultations, and all parties agreed that
+  certain aspects of economic, environmental and social activities were material
+  to them. It is also consistent with the Task Force on Climate-related
+  Financial Disclosures (TCFD) report on climate-related financial risk
+  disclosure, which indicates climate-related risk as a non-diversifiable risk
+  that affects nearly all industries. The notion that some baseline aspects of
+  sustainability information have an intrinsic impact on material risks is also
+  echoed by the European Commission action plan on financing sustainable
+  growth.</em> <a href="#footnote-ref-2">&#x2191;</a></p></div></div>
+DATA_VALIDATION: >-
+  <p>The United Nations Conference on Trade and Development (UNCTAD) and United
+  Nations Environment Programme (UNEP) validate the methodology used by data
+  providers using sampling data approach and by using different type of report
+  and compare against the minimum and advanced recommendations and data
+  disaggregation set in this methodology. </p>
+ADJUSTMENT: <p>No further adjustments are made.</p>
+IMPUTATION: >-
+  <p>No treatment of missing values is done at country level and at regional
+  level.</p>
+
+  <p>The analytics are carried out in all official UN languages and a variety of
+  other languages, but not all national languages are covered. Therefore, there
+  could be some reports that cannot be captured for this reason. </p>
+REG_AGG: >-
+  <p>The data are aggregated at the sub-regional, regional and global levels. In
+  doing so, double-counting is avoided, so a company may appear under several
+  countries, but is only counted once at regional and global levels.</p>
+DOC_METHOD: >-
+  <p>Since the data for this indicator is collected by the custodians directly
+  through ESG rating platforms, no guidance methods or guidance were provided to
+  countries wishing to compile national data for this indicator.</p>
+QUALITY_MGMNT: >-
+  <p>Quality management is provided by United Nations Conference on Trade and
+  Development (UNCTAD) and United Nations Environment Programme (UNEP).</p>
+QUALITY_ASSURE: >-
+  <p>Quality assurance is provided by United Nations Conference on Trade and
+  Development (UNCTAD) and United Nations Environment Programme (UNEP).</p>
+QUALITY_ASSMNT: >-
+  <p>Quality assessment is provided by United Nations Conference on Trade and
+  Development (UNCTAD) and United Nations Environment Programme (UNEP) and is
+  based on sample checking of randomly selected reports and comparing them with
+  the qualification criteria.</p>
+COVERAGE: >-
+  <p><strong>Data availability:</strong></p>
+
+  <p>Data on number of companies reports are available for all member states
+  that have companies publishing sustainability information, as defined by the
+  indicator. </p>
+
+  <p><strong>Time series:</strong></p>
+
+  <p>The reporting on this indicator is annual, given that most companies
+  publish sustainability information on an annual basis.</p>
+
+  <p><strong>Disaggregation:</strong></p>
+
+  <p>The platform will generate the following information for each country, then
+  aggregate per sub-region, region and globally (avoiding double-counting of
+  companies during the aggregation): </p>
+
+  <ul>
+    <li><strong>Total number of companies publishing reports that:</strong></li>
+    <li>Meet the minimum reporting recommendations </li>
+    <li>Meet the advanced level reporting recommendations</li>
+  </ul>
+
+  <ol>
+    <li><strong>Inclusion of a company under a specific country</strong></li>
+  </ol>
+
+  <p>It is proposed that:</p>
+
+  <ul>
+    <li>Multi-national companies are included in the country in which they are listed, or in the country where the head office is found. </li>
+    <li>When a multinational company produces specific separate reports, with disaggregated information per country, for the different countries they operate in, these would be counted separately under the indicator count for each country.</li>
+    <li><strong>Data disaggregated per company size</strong></li>
+  </ul>
+
+  <p>Company sizes are currently defined differently in different jurisdictions.
+  For Indicator 12.6.1, a simple split of &#x2018;large&#x2019; and
+  &#x2018;small&#x2019; could be proposed, with large being more than 250
+  employees, and small and medium being less than 250 employees. This is in line
+  with the Global Reporting Initiative (GRI), UN Global Compact definitions, and
+  is the most frequent definition at the national level in terms of employee
+  number. No minimum turnover requirement is prescribed due to the wide
+  variation in turnover of companies of this size between countries. </p>
+
+  <p>This is the definition of a company size that will be used by the custodian
+  agencies for aggregation and comparability of data and analysis of trends at
+  sub-regional, regional and global levels. </p>
+
+  <ul>
+    <li><strong>Data disaggregated per sector</strong></li>
+    <li>UNCTAD and UNEPpropose to use the International Standard Industrial Classification of All Economic Activities (ISIC) (first level classification) to provide information on the number of companies publishing sustainability reports per industry.</li>
+  </ul>
+
+  <p>A. Agriculture, forestry and fishing</p>
+
+  <p>B. Mining and quarrying</p>
+
+  <p>C. Manufacturing</p>
+
+  <p>D. Electricity, gas, steam and air conditioning supply</p>
+
+  <p>E. Water supply; sewerage, waste management and remediation activities</p>
+
+  <p>F. Construction</p>
+
+  <p>G. Wholesale and retail trade; repair of motor vehicles and motorcycles</p>
+
+  <p>H. Transportation and storage</p>
+
+  <p>I. Accommodation and food service activities</p>
+
+  <p>J. Information and communication</p>
+
+  <p>K. Financial and insurance activities</p>
+
+  <p>L. Real estate activities</p>
+
+  <p>M. Professional, scientific and technical activities</p>
+
+  <p>N. Administrative and support service activities</p>
+
+  <p>O. Public administration and defense; compulsory social security</p>
+
+  <p>P. Education</p>
+
+  <p>Q. Human health and social work activities</p>
+
+  <p>R. Arts, entertainment and recreation</p>
+
+  <p>S. Other service activities</p>
+
+  <p>T. Activities of households as employers; undifferentiated goods- and
+  services-producing activities of households for own use</p>
+
+  <p>U. Activities of extraterritorial organizations and bodies</p>
+
+  <ul>
+    <li><strong>Proportion of reports that have undergone verification/assurance of complete report</strong></li>
+    <li>Complete list of accepted assurance standards and tools to be defined.</li>
+  </ul>
+COMPARABILITY: |-
+  <p><strong>Sources of discrepancies:</strong></p>
+  <p>Not applicable</p>
+OTHER_DOC: <p>Not applicable</p>

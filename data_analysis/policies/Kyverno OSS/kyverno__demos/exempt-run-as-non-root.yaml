@@ -1,0 +1,32 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: exempt-run-as-non-root
+spec:
+  validationFailureAction: Enforce
+  applyRules: One
+  rules:
+  - name: exempt-run-as-non-root
+    match:
+      all:
+      - resources:
+          kinds:
+          - Pod
+          namespaces:
+          - exempt
+    validate:
+      podSecurity:
+         level: restricted
+         exclude:
+          - controlName: "Running as Non-root"
+            images:
+            - nginx:1.23.1-alpine
+  - name: restricted
+    match:
+      all:
+      - resources:
+          kinds:
+          - Pod
+    validate:
+      podSecurity:
+         level: restricted

@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: clusterpolicy-generate-networkpolicy-ns
+spec:
+  rules:
+  - name: clusterpolicy-generate-networkpolicy-ns
+    match:
+      resources:
+        kinds:
+        - Namespace
+        namespaces:
+        - "mama*"
+    generate:
+      synchronize: true
+      kind: NetworkPolicy
+      apiVersion: networking.k8s.io/v1
+      name: allow-own-name-space
+      namespace:  "{{request.object.metadata.name}}"
+      data:
+        spec:
+          podSelector: {}
+          policyTypes:
+          - Ingress
+          ingress:
+          - from:
+            - podSelector: {}
+        

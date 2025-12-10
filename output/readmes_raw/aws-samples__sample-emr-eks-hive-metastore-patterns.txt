@@ -1,0 +1,128 @@
+## Design patterns for implementing Hive Metastore for Amazon EMR on EKS
+
+### Introduction
+This repository accompanies the AWS Big Data Blog post [Design patterns for implementing Hive Metastore for Amazon EMR on EKS](https://aws.amazon.com/blogs/big-data/design-patterns-for-implementing-hive-metastore-for-amazon-emr-on-eks). It provides architectural guidance and implementation details for multiple Hive Metastore Service (HMS) design patterns on Amazon EMR on EKS clusters. Please use this repository in conjunction with the AWS Big Data blog post.
+
+In traditional non-containerized environments, HMS typically operated as a service within a Hadoop cluster, offering limited deployment options. However, with the emergence of containerization technologies like Docker and Kubernetes in data lakes, multiple HMS implementation patterns have become available. These patterns provide organizations with greater flexibility to customize HMS deployments according to their specific requirements and infrastructure. This repository demonstrates various HMS design patterns and their implementation details.
+
+### Design Patterns
+
+#### a. HMS as a Sidecar Container 
+
+In this pattern, HMS runs as a [sidecar container](https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/) within the same pod as the data processing framework, such as Apache Spark. This approach leverages Kubernetes’ multi-container pod functionality, allowing both HMS and the data processing framework to operate together in the same pod. 
+
+![HMS as a Sidecar Container](images/sidecar-container.png)
+
+#### b. Cluster Dedicated HMS 
+
+In this pattern, HMS runs in multiple pods managed through a [Kubernetes deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), typically within a dedicated namespace in the same data processing EKS cluster.  
+
+![Cluster Dedicated HMS](images/cluster-dedicated.png)
+
+#### c. External HMS
+
+In this pattern, HMS is deployed in its own dedicated EKS cluster deployed using Kubernetes deployment and exposed as a [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/) using [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/), separate from the data processing clusters. 
+
+![Cluster Dedicated HMS](images/external-hms.png)
+
+### Prerequisites
+Before deploying this solution, ensure the following prerequisites are in place:
+-	Access to a valid [AWS account](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fportal.aws.amazon.com%2Fbilling%2Fsignup%2Fresume&client_id=signup)
+- The [AWS Command Line Interface](http://aws.amazon.com/cli) (AWS CLI) [installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) on your local machine 
+- [```git```](https://github.com/git-guides/install-git)
+, [```docker```](https://docs.docker.com/engine/install/), [```eksctl```](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html),[```kubectl```](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html), [```helm```](https://helm.sh/docs/intro/install/), [```envsubst```](https://man7.org/linux/man-pages/man1/envsubst.1.html), [```jq```](https://jqlang.github.io/jq/) and [```yq```](https://mikefarah.gitbook.io/yq) utilities installed on the local machine
+- Permission to create AWS resources
+- Familiarity with Hive Metastore, [Kubernetes](https://kubernetes.io/), [Amazon EKS](https://aws.amazon.com/eks/), and [Amazon EMR on EKS](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html)
+
+### Clone the Repository and Set Up Environment Variables
+```sh
+git clone https://github.com/aws-samples/sample-emr-eks-hive-metastore-patterns.git
+
+cd sample-emr-eks-hive-metastore-patterns
+export REPO_DIR=$(pwd)
+export AWS_REGION=<AWS_REGION>
+
+```
+
+### Execute the below script to create the common infrastructure. 
+
+The step creates two EMR on EKS clusters: `analytics-cluster` and `datascience-cluster`, and an EKS cluster: `hivemetastore-cluster`. Both `analytics-cluster` and `datascience-cluster` serve as compute clusters that runs Spark workloads, while the `hivemetastore-cluster` hosts the HMS. 
+`analytics-cluster` is used to illustrate HMS as Sidecar and Cluster Dedicated pattern. All three clusters to demonstrate External HMS pattern.
+
+```sh
+cd ${REPO_DIR}/setup 
+./setup.sh 
+
+```
+
+### Implement HMS as a Sidecar Container
+
+#### a. Execute the below script to create infrastructure
+```sh
+cd ${REPO_DIR}/hms-sidecar
+./configure-hms-sidecar.sh analytics-cluster
+
+```
+
+#### b. Submit Spark job and verify the setup
+```
+# Run the spark job to test the successful setup
+kubectl apply -f spark-hms-sidecar-job.yaml -n emr
+
+# View the Driver logs to validate the output
+kubectl logs spark-hms-sidecar-job-driver --namespace emr
+
+```
+
+### Implement Cluster Dedicated HMS
+
+#### a. Execute the below script to create infrastructure
+```sh
+cd ${REPO_DIR}/hms-cluster-dedicated
+./configure-hms-cluster-dedicated.sh analytics-cluster
+
+```
+
+#### b. Submit Spark job and verify the setup
+```
+# Run the spark job to test the successful setup
+kubectl apply -f spark-hms-cluster-dedicated-job.yaml -n emr
+
+# View the Driver logs to validate the output
+kubectl logs spark-hms-cluster-dedicated-job-driver --namespace emr
+
+```
+
+### Implement External HMS
+
+#### a. Execute the below script to create infrastructure
+```sh
+cd ${REPO_DIR}/hms-external
+./configure-hms-external.sh
+
+```
+
+#### b. Submit Spark job and verify the setup
+
+Submit Spark jobs in `analytics-cluster` and `datascience-cluster`. The Spark jobs will connect to the HMS service in the `hivemetastore-cluster`.Repeat the following steps for `analytics-cluster` and `datascience-cluster` to verify that both clusters can connect to the HMS on `hivemetastore-cluster`.
+
+```
+# Run the spark job to test the successful setup
+kubectl config use-context <CONTEXT_NAME>
+kubectl apply -f spark-hms-external-job.yaml -n emr
+
+# View the Driver logs to validate the output
+kubectl logs spark-hms-external-job-driver --namespace emr
+
+```
+
+### Cleanup
+You can use the helper script to cleanup the resources provisioned in this blog post
+
+```sh
+cd ${REPO_DIR}/setup
+./cleanup.sh
+```
+
+### Disclaimer
+This solution deploys the Open Source Apache Hive Metastore in the AWS cloud. Apache Hive Metastore is part of Apache Hive, an external open-source project, and AWS makes no claims regarding its security properties. Please evaluate Apache Hive and Hive Metastore according to your organization's security best practices prior to implementing this solution.

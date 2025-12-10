@@ -1,0 +1,2 @@
+pip install langchain-chroma==0.1.1
+pip install langchain==0.2.7 langchain-core==0.2.15 langchain-openai==0.1.15

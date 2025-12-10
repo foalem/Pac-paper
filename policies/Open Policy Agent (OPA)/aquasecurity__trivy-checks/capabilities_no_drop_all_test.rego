@@ -1,0 +1,43 @@
+package builtin.kubernetes.KSV003
+
+import rego.v1
+
+test_cap_no_drop_all_denied if {
+	r := deny with input as {
+		"apiVersion": "v1",
+		"kind": "Pod",
+		"metadata": {"name": "hello-drop-capabilities"},
+		"spec": {"containers": [{
+			"command": [
+				"sh",
+				"-c",
+				"echo 'Hello' && sleep 1h",
+			],
+			"image": "busybox",
+			"name": "hello",
+		}]},
+	}
+
+	count(r) == 1
+	r[_].msg == "Container 'hello' of Pod 'hello-drop-capabilities' should add 'ALL' to 'securityContext.capabilities.drop'"
+}
+
+test_cap_drop_all_allowed if {
+	r := deny with input as {
+		"apiVersion": "v1",
+		"kind": "Pod",
+		"metadata": {"name": "hello-drop-capabilities"},
+		"spec": {"containers": [{
+			"command": [
+				"sh",
+				"-c",
+				"echo 'Hello' && sleep 1h",
+			],
+			"image": "busybox",
+			"name": "hello",
+			"securityContext": {"capabilities": {"drop": ["ALL"]}},
+		}]},
+	}
+
+	count(r) == 0
+}

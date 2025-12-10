@@ -1,0 +1,53 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstoragebucketretentionconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageBucketRetentionConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPStorageBucketRetentionConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          params := input.parameters
+          resource.type == "google_storage_bucket"
+          msg := check_retention(resource, params)
+          metadata := {
+            "resource_address" : resource.address,
+            "module_address" : resource.module_address,
+          }
+        }
+        check_retention(resource, params) = msg {
+          resource.change.after.retention_policy == []
+          msg := sprintf("Bucket retention policy is not set for bucket, %s",[resource.address])
+        }
+        check_retention(resource, params) = msg {
+           retention_days := (resource.change.after.retention_policy[_].retention_period / 86400)
+           retention_days >= params.maximum_retention_days
+          msg := sprintf("Bucket retention policy is set %d which greater than maximum retention days %d",[retention_days, params.maximum_retention_days ])
+        }
+        
+        check_retention(resource, params) = msg {
+          resource.change.after.lifecycle_rule != []
+          msg := sprintf("Bucket with retention policy doesn't have lifecycle_rule %s", resource.address)
+        }
+        
+        check_retention(resource, params) = msg {
+          resource.change.after.lifecycle_rule[_].action[_].type != "Delete"
+          msg := sprintf("lifecycle rule action is not set to delete with max retention days, %s", [resource.address])
+        }
+        
+
+

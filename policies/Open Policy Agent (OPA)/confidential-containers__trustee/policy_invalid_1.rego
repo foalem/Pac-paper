@@ -1,0 +1,2 @@
+default allow = true
+

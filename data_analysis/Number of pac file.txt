@@ -1,0 +1,9 @@
+Sentinel: 860
+Rego: 13 402
+Pulumi: 959
+cedar: 134
+kyverno: 3 530
+Custodian: 623
+AWS config: 636
+Opagatekeeper: 1 503
+Kubewarden: 25

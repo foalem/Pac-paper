@@ -1,0 +1,160 @@
+---
+schema-version: v1.2.3
+id: draft-vcgtf-crypto-assets-security-considerations-05
+title:
+- content: General Security Considerations for Cryptoassets Custodians
+  language:
+  - en
+  script:
+  - Latn
+  format: text/plain
+link:
+- content: https://datatracker.ietf.org/doc/html/draft-vcgtf-crypto-assets-security-considerations-05
+  type: src
+type: standard
+docid:
+- id: draft-vcgtf-crypto-assets-security-considerations-05
+  type: Internet-Draft
+  primary: true
+- id: I-D.vcgtf-crypto-assets-security-considerations
+  type: IETF
+  scope: anchor
+docnumber: I-D.vcgtf-crypto-assets-security-considerations
+date:
+- type: published
+  value: '2019-11-04'
+contributor:
+- person:
+    name:
+      given:
+        forename:
+        - content: Masashi
+          language:
+          - en
+        - language:
+          - en
+          initial: M
+        formatted_initials:
+          content: M.
+          language:
+          - en
+      surname:
+        content: Sato
+        language:
+        - en
+      completename:
+        content: Masashi Sato
+        language:
+        - en
+    affiliation:
+    - organization:
+        name:
+        - content: SECOM Co., Ltd. Intelligent System Laboratory
+  role:
+  - type: author
+- person:
+    name:
+      given:
+        forename:
+        - content: Masaki
+          language:
+          - en
+        - language:
+          - en
+          initial: M
+        formatted_initials:
+          content: M.
+          language:
+          - en
+      surname:
+        content: Shimaoka
+        language:
+        - en
+      completename:
+        content: Masaki Shimaoka
+        language:
+        - en
+    affiliation:
+    - organization:
+        name:
+        - content: SECOM Co., Ltd. Intelligent System Laboratory
+  role:
+  - type: author
+- person:
+    name:
+      given:
+        forename:
+        - content: Hirotaka
+          language:
+          - en
+        - language:
+          - en
+          initial: H
+        formatted_initials:
+          content: H.
+          language:
+          - en
+      surname:
+        content: Nakajima
+        language:
+        - en
+      completename:
+        content: Hirotaka Nakajima
+        language:
+        - en
+    affiliation:
+    - organization:
+        name:
+        - content: Mercari, Inc. R4D
+  role:
+  - type: author
+version:
+- draft: '05'
+revdate: '2019-11-04'
+language:
+- en
+script:
+- Latn
+abstract:
+- content: "<p>This document discusses the technical and operational risks of cryptoassets
+    custodians and its security controls to avoid the unintended transactions for
+    its customers.</p>"
+  language:
+  - en
+  script:
+  - Latn
+  format: text/html
+relation:
+- type: updates
+  bibitem:
+    id: draft-vcgtf-crypto-assets-security-considerations-02
+    docid:
+    - id: draft-vcgtf-crypto-assets-security-considerations-02
+      type: Internet-Draft
+      primary: true
+    formattedref:
+      content: draft-vcgtf-crypto-assets-security-considerations-02
+      format: text/plain
+- type: updatedBy
+  bibitem:
+    id: draft-vcgtf-crypto-assets-security-considerations-06
+    docid:
+    - id: draft-vcgtf-crypto-assets-security-considerations-06
+      type: Internet-Draft
+      primary: true
+    formattedref:
+      content: draft-vcgtf-crypto-assets-security-considerations-06
+      format: text/plain
+series:
+- type: main
+  title:
+    content: Internet-Draft
+    language:
+    - en
+    script:
+    - Latn
+    format: text/plain
+  number: draft-vcgtf-crypto-assets-security-considerations-05
+doctype: internet-draft
+ext:
+  schema-version: v1.0.1

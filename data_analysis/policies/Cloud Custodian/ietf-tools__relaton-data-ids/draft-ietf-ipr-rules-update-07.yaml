@@ -1,0 +1,86 @@
+---
+schema-version: v1.2.3
+id: draft-ietf-ipr-rules-update-07
+title:
+- content: RFC 3978 Update
+  language:
+  - en
+  script:
+  - Latn
+  format: text/plain
+link:
+- content: https://datatracker.ietf.org/doc/html/draft-ietf-ipr-rules-update-07
+  type: src
+type: standard
+docid:
+- id: draft-ietf-ipr-rules-update-07
+  type: Internet-Draft
+  primary: true
+- id: I-D.ietf-ipr-rules-update
+  type: IETF
+  scope: anchor
+docnumber: I-D.ietf-ipr-rules-update
+date:
+- type: published
+  value: '2006-07-25'
+contributor:
+- person:
+    name:
+      given:
+        forename:
+        - content: Scott
+          language:
+          - en
+        - language:
+          - en
+          initial: S
+        - language:
+          - en
+          initial: O
+        formatted_initials:
+          content: S. O.
+          language:
+          - en
+      surname:
+        content: Bradner
+        language:
+        - en
+      completename:
+        content: Scott O. Bradner
+        language:
+        - en
+    affiliation:
+    - organization:
+        name:
+        - content: Harvard University
+  role:
+  - type: author
+version:
+- draft: '07'
+revdate: '2006-07-25'
+language:
+- en
+script:
+- Latn
+abstract:
+- content: <p>This document modifies RFC 3978 "IETF Rights in Contributions" by recognizing
+    that the IETF Trust is now the proper custodian of all IETF-related intellectual
+    property rights.</p>
+  language:
+  - en
+  script:
+  - Latn
+  format: text/html
+series:
+- type: main
+  title:
+    content: Internet-Draft
+    language:
+    - en
+    script:
+    - Latn
+    format: text/plain
+  number: draft-ietf-ipr-rules-update-07
+doctype: internet-draft
+ext:
+  schema-version: v1.0.1
